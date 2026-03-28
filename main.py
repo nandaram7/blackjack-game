@@ -2,9 +2,7 @@ import random
 from art import logo
 
 # variable definitions
-
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
-loop_continue = True
 
 # function definitions
 def choose_card():
@@ -30,7 +28,7 @@ def dealing_card():
             return
 
         print(f"\tYour cards: {user_list}, current score: {total}")
-        print(f"\tComputer's first card is {computer_total}")
+        print(f"\tComputer's first card is {computer_list[0]}")
         dealing_card()
 
     elif continue_deal != 'n':
@@ -48,15 +46,28 @@ def computer_deal():
     else:
         return
 
-def final_score():
-    """Prints final score information"""
-    print(f"\tYour final hand: {user_list}, final score: {user_total}")
-    print(f"\tComputer's final hand: {computer_list}, final score: {computer_total}\n")
+def final_result(u_total, c_total):
+    if u_total == c_total:
+        return "Thats a Drawww"
+    elif c_total == 21:
+        return "Computer's got a BLACKJACK. You lose!!!"
+    elif u_total == 21:
+        return "You win with a BLACKJACK!!!"
+    elif u_total > 21:
+        return "You went over! You lose!!!"
+    elif c_total > 21:
+        return "Computer went over! You win!!!"
+    elif c_total > u_total:
+        return "You lose!!!"
+    else:
+        return "You win!!! Wooohoooo!!!"
 
 # Main BLACKJACK LOOP
-while loop_continue:
+while 1:
+    user_list = []
+    computer_list = []
     # Loop continue?
-    user_choice = input("Welcome to the BLACKJACK game. \nWould you like to play? Type 'y' or 'n': ")
+    user_choice = input("Welcome to the BLACKJACK game. Would you like to play? Type 'y' or 'n': ")
     if user_choice == 'n':
         break
     elif user_choice == 'y':
@@ -66,38 +77,24 @@ while loop_continue:
         print("Lets try that again huh??? \n\n")
         continue
 
-    # Customer first deal
-    user_list = [cards[choose_card()], cards[choose_card()]]
+    # Customer and computer first deal
+    for _ in range(2):
+        user_list.append(cards[choose_card()])
+        computer_list.append(cards[choose_card()])
+    
     user_total = add_cards(user_list)
-    # Computer first card
-    computer_list = [cards[choose_card()]]
     computer_total = add_cards(computer_list)
-
     print(f"\tYour cards: {user_list}, current score: {user_total}")
     print(f"\tComputer's first card: {computer_total}")
 
-    if user_total == 21:
-        final_score()
-        print("That's a perfect hand! You win with a BLACKJACK!\n")
-        break
+    if computer_total != 21 or user_total != 21:
+        dealing_card()
 
-    dealing_card()
-    user_total = add_cards(user_list)
-    if user_total > 21:
-        final_score()
-        print("You went over! You lose!\n")
-
-    else:
+    if computer_total != 21 or user_total != 21:
         computer_deal()
-        computer_total = add_cards(computer_list)
-        final_score()
 
-        if computer_total > 21:
-            print("Computer went over! You win!\n")
-        else:
-            if computer_total > user_total:
-                print("Computer has won!\n")
-            elif computer_total == user_total:
-                print("It's a Drawww\n")
-            else:
-                print("You have won!!! Lesssgoooo!!!\n")
+    user_total = add_cards(user_list)
+    computer_total = add_cards(computer_list)
+    print(f"\tYour final hand: {user_list}, final score: {user_total}")
+    print(f"\tComputer's final hand: {computer_list}, final score: {computer_total}\n")
+    print(final_result(user_total, computer_total))
