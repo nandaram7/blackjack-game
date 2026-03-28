@@ -11,12 +11,12 @@ def choose_card():
     return random.randint(0, 12)
 
 def add_cards(card_list):
-    sum = 0
+    total = 0
     for card in card_list:
-        sum += card
-        if card == 11 and sum > 21:
-            sum -= 10
-    return sum
+        total += card
+        if card == 11 and total > 21:
+            total -= 10
+    return total
 
 def dealing_card():
     continue_deal = input("Type 'y' to get another card and get 'n' to pass: ")
