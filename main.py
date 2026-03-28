@@ -8,9 +8,11 @@ loop_continue = True
 
 # function definitions
 def choose_card():
+    """Gets an index to choose a random card"""
     return random.randint(0, 12)
 
 def add_cards(card_list):
+    """Basic level function to sum(card_list) with Ace to act as 1 or 11"""
     total = 0
     for card in card_list:
         total += card
@@ -19,6 +21,7 @@ def add_cards(card_list):
     return total
 
 def dealing_card():
+    """Deals card to the customer as long as they want to continue"""
     continue_deal = input("Type 'y' to get another card and get 'n' to pass: ")
     if continue_deal == 'y':
         user_list.append(cards[choose_card()])
@@ -37,6 +40,7 @@ def dealing_card():
         return
 
 def computer_deal():
+    """Gets cards for the computer when the user has chosen to stand"""
     computer_list.append(cards[choose_card()])
     total = add_cards(computer_list)
     if total < 17:
@@ -45,6 +49,7 @@ def computer_deal():
         return
 
 def final_score():
+    """Prints final score information"""
     print(f"\tYour final hand: {user_list}, final score: {user_total}")
     print(f"\tComputer's final hand: {computer_list}, final score: {computer_total}\n")
 
