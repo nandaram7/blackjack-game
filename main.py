@@ -90,7 +90,7 @@ while 1:
     if computer_total != 21 or user_total != 21:
         dealing_card()
 
-    if computer_total != 21 or user_total != 21:
+    if computer_total != 21 or (user_total == 21 and len(user_list) != 2):
         computer_deal()
 
     user_total = add_cards(user_list)
